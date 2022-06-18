@@ -51,7 +51,11 @@ public class PlayerMovements : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GameOver"))
         {
-            Destroy(gameObject, 0.1f);
+            canvas.gameObject.SetActive(true);
+            text.text = "You loose ! :(";
+            text.color = Color.red;
+
+            Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Obstacle"))
