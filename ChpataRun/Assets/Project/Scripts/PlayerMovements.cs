@@ -41,6 +41,11 @@ public class PlayerMovements : MonoBehaviour
         {
             isGrounded = true;
         }
+
+        else if (collision.gameObject.CompareTag("GameOver"))
+        {
+            Destroy(this.gameObject, 0.1f);
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
