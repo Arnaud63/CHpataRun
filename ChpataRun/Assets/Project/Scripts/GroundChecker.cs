@@ -7,17 +7,15 @@ public class GroundChecker : MonoBehaviour
     [SerializeField]
     private PlayerMovements playerMovements; 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             playerMovements.isGrounded = true;
-            playerMovements.isJumped = false;
         }
-
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         playerMovements.isGrounded = false;
     }

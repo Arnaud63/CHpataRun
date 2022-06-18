@@ -9,7 +9,7 @@ public class PlayerMovements : MonoBehaviour
 
     public float jumpForce = 50;
     public bool isGrounded;
-    public bool isJumped = false;
+    public bool oneTimeJumped = false;
 
     void Start()
     {
@@ -20,10 +20,9 @@ public class PlayerMovements : MonoBehaviour
     {
         rb.velocity = Input.GetAxis("Horizontal") != 0 ? new Vector2(speed * Input.GetAxis("Horizontal"), rb.velocity.y) : new Vector2(rb.velocity.x - rb.velocity.x/10, rb.velocity.y);
 
-        if (((Input.GetKey(KeyCode.Space) && isGrounded == true) || (Input.GetKey(KeyCode.UpArrow) && isGrounded == true) || (Input.GetKey(KeyCode.Z) && isGrounded == true)) && !isJumped)
-        {
+        if ( (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && isGrounded) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isJumped = true;
+            isGrounded = false;
         }
     }
 
@@ -36,7 +35,6 @@ public class PlayerMovements : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GameOver"))
         {
-            Debug.Log("GameOver");
             Destroy(gameObject, 0.1f);
         }
     }
