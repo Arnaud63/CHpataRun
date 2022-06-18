@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovements : MonoBehaviour
 {
     Rigidbody2D rb;
-    [SerializeField] Animator animator;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameManager manager;
+    [SerializeField] public Text text;
+    [SerializeField] public Canvas canvas;
+
+
+    [SerializeField] public Button restartButton;
+    [SerializeField] public Button quitButton;
     public float speed = 2;
 
     public float jumpForce = 50;
     public bool isGrounded;
     public bool oneTimeJumped = false;
+    
 
     void Start()
     {
@@ -47,8 +56,16 @@ public class PlayerMovements : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Mort");
-            this.enabled = false;
+            manager.SpawnDeadPlayer(this.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Flag"))
+        {
+            canvas.gameObject.SetActive(true);
+            text.text = "You won ! :)";
+            text.color = Color.green;
+
+            Destroy(gameObject);
         }
     }
 
