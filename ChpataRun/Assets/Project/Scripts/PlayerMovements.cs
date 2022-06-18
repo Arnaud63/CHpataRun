@@ -20,9 +20,10 @@ public class PlayerMovements : MonoBehaviour
     {
         rb.velocity = Input.GetAxis("Horizontal") != 0 ? new Vector2(speed * Input.GetAxis("Horizontal"), rb.velocity.y) : new Vector2(rb.velocity.x - rb.velocity.x/10, rb.velocity.y);
 
-        if ((Input.GetKey(KeyCode.Space) && isGrounded == true) || (Input.GetKey(KeyCode.UpArrow) && isGrounded == true) || (Input.GetKey(KeyCode.Z) && isGrounded == true))
+        if (((Input.GetKey(KeyCode.Space) && isGrounded == true) || (Input.GetKey(KeyCode.UpArrow) && isGrounded == true) || (Input.GetKey(KeyCode.Z) && isGrounded == true)) && !isJumped)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            isJumped = true;
         }
     }
 

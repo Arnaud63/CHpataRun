@@ -20,6 +20,5 @@ public class GroundChecker : MonoBehaviour
     void OnCollisionExit2D(Collision2D collision)
     {
         playerMovements.isGrounded = false;
-        playerMovements.isJumped = true;
     }
 }
