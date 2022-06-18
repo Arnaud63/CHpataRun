@@ -7,8 +7,9 @@ public class PlayerMovements : MonoBehaviour
     Rigidbody2D rb;
     public float speed = 2;
 
-    public float jumpForce = 5;
+    public float jumpForce = 50;
     public bool isGrounded;
+    public bool isJumped = false;
 
     void Start()
     {
@@ -17,39 +18,26 @@ public class PlayerMovements : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
-        }
-        else if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
+        rb.velocity = Input.GetAxis("Horizontal") != 0 ? new Vector2(speed * Input.GetAxis("Horizontal"), rb.velocity.y) : new Vector2(rb.velocity.x - rb.velocity.x/10, rb.velocity.y);
+
         if ((Input.GetKey(KeyCode.Space) && isGrounded == true) || (Input.GetKey(KeyCode.UpArrow) && isGrounded == true) || (Input.GetKey(KeyCode.Z) && isGrounded == true))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+       rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y > 0 ? rb.velocity.y * 0.9f : rb.velocity.y * 1.1f);
+    }
 
-        else if (collision.gameObject.CompareTag("GameOver"))
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("GameOver"))
         {
-            Destroy(this.gameObject, 0.1f);
+            Debug.Log("GameOver");
+            Destroy(gameObject, 0.1f);
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        isGrounded = false;
-    }
 }
