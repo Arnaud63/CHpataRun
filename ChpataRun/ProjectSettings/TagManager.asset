@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - groundTag
+  - Ground
+  - GameOver
   layers:
   - Default
   - TransparentFX
